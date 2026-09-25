@@ -6,24 +6,14 @@
 #ifndef MAINSENSORBOARDDEPLOYMENT_MAINSENSORBOARDDEPLOYMENTTOPOLOGYDEFS_HPP
 #define MAINSENSORBOARDDEPLOYMENT_MAINSENSORBOARDDEPLOYMENTTOPOLOGYDEFS_HPP
 
-// Subtopology PingEntries includes
-#include "Svc/Subtopologies/CdhCore/PingEntries.hpp"
-#include "Svc/Subtopologies/ComCcsds/PingEntries.hpp"
-#include "Svc/Subtopologies/DataProducts/PingEntries.hpp"
-#include "Svc/Subtopologies/FileHandling/PingEntries.hpp"
+#include "Fw/Types/MallocAllocator.hpp"
+#include "MainSensorBoardDeployment/Top/FppConstantsAc.hpp"
 
 // SubtopologyTopologyDefs includes
-#include "Svc/Subtopologies/CdhCore/SubtopologyTopologyDefs.hpp"
-#include "Svc/Subtopologies/ComCcsds/SubtopologyTopologyDefs.hpp"
-#include "Svc/Subtopologies/DataProducts/SubtopologyTopologyDefs.hpp"
-#include "Svc/Subtopologies/FileHandling/SubtopologyTopologyDefs.hpp"
-
-//ComCcsds Enum Includes
-#include "Svc/Subtopologies/ComCcsds/Ports_ComPacketQueueEnumAc.hpp"
-#include "Svc/Subtopologies/ComCcsds/Ports_ComBufferQueueEnumAc.hpp"
-
-// Include autocoded FPP constants
-#include "MainSensorBoardDeployment/Top/FppConstantsAc.hpp"
+#include "Svc/Subtopologies/ComFprime/SubtopologyTopologyDefs.hpp"
+// ComFprime Enum Includes
+#include "Svc/Subtopologies/ComFprime/Ports_ComPacketQueueEnumAc.hpp"
+#include "Svc/Subtopologies/ComFprime/Ports_ComBufferQueueEnumAc.hpp"
 
 /**
  * \brief required ping constants
@@ -45,31 +35,30 @@
  * ```
  */
 namespace PingEntries {
-    namespace MainSensorBoardDeployment_rateGroup1 {enum { WARN = 3, FATAL = 5 };}
-    namespace MainSensorBoardDeployment_rateGroup2 {enum { WARN = 3, FATAL = 5 };}
-    namespace MainSensorBoardDeployment_rateGroup3 {enum { WARN = 3, FATAL = 5 };}
-    namespace MainSensorBoardDeployment_cmdSeq {enum { WARN = 3, FATAL = 5 };}
+    namespace MainSensorBoardDeployment_tlmSend      {enum { WARN = 3, FATAL = 5 };}
+    namespace MainSensorBoardDeployment_cmdDisp      {enum { WARN = 3, FATAL = 5 };}
+    namespace MainSensorBoardDeployment_eventLogger  {enum { WARN = 3, FATAL = 5 };}
+    namespace MainSensorBoardDeployment_rateGroup1   {enum { WARN = 3, FATAL = 5 };}
 }  // namespace PingEntries
 
 // Definitions are placed within a namespace named after the deployment
 namespace MainSensorBoardDeployment {
 
-/**
- * \brief required type definition to carry state
- *
- * The topology autocoder requires an object that carries state with the name `MainSensorBoardDeployment::TopologyState`. Only the type
- * definition is required by the autocoder and the contents of this object are otherwise opaque to the autocoder. The
- * contents are entirely up to the definition of the project. This deployment uses subtopologies.
- */
-struct TopologyState {
-    const char* hostname;   //!< Hostname for TCP communication
-    U16 port;              //!< Port for TCP communication
-    CdhCore::SubtopologyState cdhCore;           //!< Subtopology state for CdhCore
-    ComCcsds::SubtopologyState comCcsds;         //!< Subtopology state for ComCcsds 
-    DataProducts::SubtopologyState dataProducts; //!< Subtopology state for DataProducts
-    FileHandling::SubtopologyState fileHandling; //!< Subtopology state for FileHandling
-};
+    /**
+     * \brief required type definition to carry state
+     *
+     * The topology autocoder requires an object that carries state with the name `MainSensorBoardDeployment::TopologyState`. Only the type
+     * definition is required by the autocoder and the contents of this object are otherwise opaque to the autocoder. The
+     * contents are entirely up to the definition of the project. This reference application specifies hostname and port
+     * fields, which are derived by command line inputs.
+     */
+    struct TopologyState {
+        FwIndexType uartNumber;
+        PlatformIntType uartBaud;
+    };
 
-namespace PingEntries = ::PingEntries;
 }  // namespace MainSensorBoardDeployment
+
+
+
 #endif
