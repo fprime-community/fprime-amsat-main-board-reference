@@ -38,7 +38,7 @@ namespace PingEntries {
     namespace MainSensorBoardDeployment_tlmSend      {enum { WARN = 3, FATAL = 5 };}
     namespace MainSensorBoardDeployment_cmdDisp      {enum { WARN = 3, FATAL = 5 };}
     namespace MainSensorBoardDeployment_eventLogger  {enum { WARN = 3, FATAL = 5 };}
-    namespace MainSensorBoardDeployment_rateGroup1   {enum { WARN = 3, FATAL = 5 };}
+    namespace MainSensorBoardDeployment_rateGroup10Hz   {enum { WARN = 3, FATAL = 5 };}
 }  // namespace PingEntries
 
 // Definitions are placed within a namespace named after the deployment

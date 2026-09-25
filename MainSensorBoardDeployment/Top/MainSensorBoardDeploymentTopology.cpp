@@ -16,13 +16,13 @@
 // Allows easy reference to objects in FPP/autocoder required namespaces
 using namespace MainSensorBoardDeployment;
 
-// rateDriver ticks every 1ms (1kHz). The divisors produce 10Hz, 5Hz, and 1Hz signals. Only the 10Hz signal (rateGroup1)
-// is connected.
+// rateDriver ticks every 1ms (1kHz). The divisors produce 10Hz, 5Hz, and 1Hz signals. Only the 10Hz signal
+// (rateGroup10Hz) is connected.
 Svc::RateGroupDriver::DividerSet rateGroupDivisors{{{100, 0}, {200, 0}, {1000, 0}}};
 
 // Rate groups may supply a context token to each of the attached children whose purpose is set by the project. The
 // reference topology sets each token to zero as these contexts are unused in this project.
-U32 rateGroup1Context[FppConstant_PassiveRateGroupOutputPorts::PassiveRateGroupOutputPorts] = {};
+U32 rateGroup10HzContext[FppConstant_PassiveRateGroupOutputPorts::PassiveRateGroupOutputPorts] = {};
 
 /**
  * \brief configure/setup components in project-specific way
@@ -36,7 +36,7 @@ void configureTopology() {
     rateGroupDriver.configure(rateGroupDivisors);
 
     // Rate groups require context arrays.
-    rateGroup1.configure(rateGroup1Context, FW_NUM_ARRAY_ELEMENTS(rateGroup1Context));
+    rateGroup10Hz.configure(rateGroup10HzContext, FW_NUM_ARRAY_ELEMENTS(rateGroup10HzContext));
 }
 
 // Public functions for use in main program are namespaced with deployment name MainSensorBoardDeployment

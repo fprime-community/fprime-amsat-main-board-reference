@@ -51,7 +51,7 @@ module MainSensorBoardDeployment {
   # Passive component instances
   # ----------------------------------------------------------------------
 
-  instance rateGroup1: Svc.PassiveRateGroup base id 0x10004000
+  instance rateGroup10Hz: Svc.PassiveRateGroup base id 0x10004000
 
   @ Communications driver. May be swapped with other com drivers like Arduino.StreamDriver, Arduino.TcpServer, or Arduino.TcpClient.
   instance comDriver: Arduino.StreamDriver base id 0x10005000

@@ -4,7 +4,7 @@
 
 ## Topology
 
-- **Scheduling**: `Arduino.HardwareRateDriver` ticks every 1 ms. `Svc.RateGroupDriver` divides it down to a 10 Hz passive rate group (`rateGroup1`) that runs telemetry, system resources, and the serial driver. Active components run cooperatively under the `fprime-baremetal` TaskRunner from the Arduino `loop()`.
+- **Scheduling**: `Arduino.HardwareRateDriver` ticks every 1 ms. `Svc.RateGroupDriver` divides it down to a 10 Hz passive rate group (`rateGroup10Hz`) that runs telemetry, system resources, and the serial driver. Active components run cooperatively under the `fprime-baremetal` TaskRunner from the Arduino `loop()`.
 - **Command and data handling**: `Svc.CommandDispatcher`, `Svc.EventManager`, `Svc.TlmChan`, `Svc.PassiveTextLogger`, `Baremetal.FatalHandler`, `Arduino.ArduinoTime`, `Svc.SystemResources`.
 - **Communications**: the F' core **ComFprime** subtopology (F' framing, matching the CDHDeployment) over `Arduino.StreamDriver` on the Pico W USB serial port at 115200 baud.
 - **No filesystem**: there is no file uplink/downlink, command sequencer, or parameter database. Parameters are not loaded at startup.

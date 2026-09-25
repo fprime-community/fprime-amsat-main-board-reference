@@ -5,7 +5,7 @@ module MainSensorBoardDeployment {
   # ----------------------------------------------------------------------
 
     enum Ports_RateGroups {
-      rateGroup1
+      rateGroup10Hz
     }
 
   topology MainSensorBoardDeployment {
@@ -26,7 +26,7 @@ module MainSensorBoardDeployment {
     instance eventLogger
     instance fatalHandler
     instance rateDriver
-    instance rateGroup1
+    instance rateGroup10Hz
     instance rateGroupDriver
     instance systemResources
     instance textLogger
@@ -55,11 +55,11 @@ module MainSensorBoardDeployment {
       # Block driver
       rateDriver.CycleOut -> rateGroupDriver.CycleIn
 
-      # Rate group 1
-      rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup1] -> rateGroup1.CycleIn
-      rateGroup1.RateGroupMemberOut[0] -> tlmSend.Run
-      rateGroup1.RateGroupMemberOut[1] -> systemResources.run
-      rateGroup1.RateGroupMemberOut[2] -> comDriver.schedIn
+      # 10Hz rate group
+      rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup10Hz] -> rateGroup10Hz.CycleIn
+      rateGroup10Hz.RateGroupMemberOut[0] -> tlmSend.Run
+      rateGroup10Hz.RateGroupMemberOut[1] -> systemResources.run
+      rateGroup10Hz.RateGroupMemberOut[2] -> comDriver.schedIn
     }
 
     connections FaultProtection {
