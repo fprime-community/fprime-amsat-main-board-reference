@@ -43,3 +43,14 @@ fprime-gds -n --dictionary build-artifacts/rpipicow/MainSensorBoardDeployment/di
 > `/dev/ttyACM0` may differ on your system. Run `ls /dev/tty*` with the Pico W unplugged and plugged in to find it. On macOS it is similar to `/dev/tty.usbmodem12345`.
 >
 > Log text (`Fw::Logger` and the text event logger) is written to the same USB serial port as the F' frames. The GDS skips the non-frame bytes.
+
+## Testing
+
+Run these from the project root in the project virtual environment, after building the deployment.
+
+| Tests | What they cover | Command |
+|---|---|---|
+| Host | Dictionary ID ranges, expected commands and telemetry, and static RAM and flash budgets | `python -m pytest MainSensorBoardDeployment/test/host` |
+| Hardware | The deployment running on a Pico W: telemetry, commands, and the 10 Hz rate group | `MainSensorBoardDeployment/test/int/run-hardware-tests.sh [/dev/ttyACM0]` |
+
+[CI](../.github/workflows/ci.yml) builds the firmware and runs the host checks on every push and pull request, and saves the `.uf2` as a build artifact. The hardware tests need a flashed Pico W connected over USB and are run by hand. Close any other GDS or serial monitor using the port first.
