@@ -25,6 +25,8 @@ fprime-util build
 
 ## Uploading to the Pico W
 
+On an assembled CubeSatSim, `scripts/deploy-fsw.sh --only pico` in [fprime-amsat-reference](https://github.com/fprime-community/fprime-amsat-reference#loading-flight-software-onto-an-assembled-cubesatsim) uploads the firmware over the USB cable, and resets the Pico W into its bootloader so BOOTSEL is not needed. To upload by hand:
+
 Hold down the BOOTSEL button on the Pico W as you plug in the USB cable. A drive named `RPI-RP2` mounts on your computer. Copy `MainSensorBoardDeployment.elf.uf2` from `build-artifacts/rpipicow/MainSensorBoardDeployment/bin/` (at the project root) onto that drive. The Pico W unmounts and starts running the deployment.
 
 See the fprime-arduino [RP2040 upload guide](https://github.com/fprime-community/fprime-arduino/blob/main/docs/uploading/rp2040_2350.md) for an alternative upload method over the serial port.
