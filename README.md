@@ -66,4 +66,4 @@ From the project virtual environment:
 `rpipicow` is the default toolchain in `settings.ini`. Build output is written to `build-artifacts/rpipicow/MainSensorBoardDeployment/` at the project root.
 
 ## Loading and Running on the Pico W
-See [MainSensorBoardDeployment/README.md](MainSensorBoardDeployment/README.md#uploading-to-the-pico-w) for uploading the firmware and connecting the F' GDS.
+On an assembled CubeSatSim, load the Pico W and the Pi Zero 2 together with `scripts/deploy-fsw.sh` from [fprime-amsat-reference](https://github.com/fprime-community/fprime-amsat-reference#loading-flight-software-onto-an-assembled-cubesatsim), with this repo checked out next to it. To load the Pico W on its own, see [MainSensorBoardDeployment/README.md](MainSensorBoardDeployment/README.md#uploading-to-the-pico-w), which also covers connecting the F' GDS.
