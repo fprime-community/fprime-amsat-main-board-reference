@@ -7,10 +7,13 @@
 #
 #####
 
+# Deployment is only compatible with the Arduino platform
+restrict_platforms(ArduinoFw)
+
 ###
 # Topology and Components
 ###
-
+add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/config/")
 add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/Top/")
 
 # Add custom components to this specific deployment here
@@ -22,3 +25,5 @@ register_fprime_deployment(
     DEPENDS
         ${FPRIME_CURRENT_MODULE}_Top
 )
+
+finalize_arduino_executable("${FPRIME_CURRENT_MODULE}")

@@ -11,11 +11,12 @@
 ####
 
 register_fprime_module(
-    AUTOCODER_INPUTS
-        "${CMAKE_CURRENT_LIST_DIR}/instances.fpp"
-        "${CMAKE_CURRENT_LIST_DIR}/topology.fpp"
-    SOURCES
-        "${CMAKE_CURRENT_LIST_DIR}/MainSensorBoardDeploymentTopology.cpp"
-    DEPENDS
-        Fw_Logger
+  AUTOCODER_INPUTS
+    "${CMAKE_CURRENT_LIST_DIR}/instances.fpp"
+    "${CMAKE_CURRENT_LIST_DIR}/topology.fpp"
+  SOURCES
+    "${CMAKE_CURRENT_LIST_DIR}/MainSensorBoardDeploymentTopology.cpp"
+  DEPENDS
+    Arduino_Drv_StreamDriver
+    fprime-baremetal_Os_TaskRunner
 )
