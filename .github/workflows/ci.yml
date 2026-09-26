@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    name: Build for the Pico W and run host checks
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Cache Arduino cores and libraries
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.arduino15
+            ~/Arduino
+          key: arduino-rp2040-${{ runner.os }}-v1
+
+      - name: Install F´ tools and the Arduino CLI
+        run: |
+          pip install -r lib/fprime/requirements.txt arduino-cli-cmake-wrapper
+          mkdir -p "$HOME/.local/bin"
+          curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR="$HOME/.local/bin" sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Install the Raspberry Pi Pico core and Time library
+        run: |
+          arduino-cli config init --overwrite
+          arduino-cli config add board_manager.additional_urls https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
+          arduino-cli core update-index
+          arduino-cli core install rp2040:rp2040
+          arduino-cli lib install Time
+
+      - name: Build MainSensorBoardDeployment
+        working-directory: MainSensorBoardDeployment
+        run: |
+          fprime-util generate
+          fprime-util build -j4
+
+      - name: Host checks
+        run: python -m pytest MainSensorBoardDeployment/test/host -v
+
+      - name: Upload firmware
+        uses: actions/upload-artifact@v4
+        with:
+          name: MainSensorBoardDeployment-rpipicow
+          path: |
+            build-artifacts/rpipicow/MainSensorBoardDeployment/bin/MainSensorBoardDeployment.elf.uf2
+            build-artifacts/rpipicow/MainSensorBoardDeployment/dict/MainSensorBoardDeploymentTopologyDictionary.json
